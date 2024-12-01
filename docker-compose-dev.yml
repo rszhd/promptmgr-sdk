@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  promptmgr-sdk-dev:
+    container_name: promptmgr-sdk-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/app
+    networks:
+      - promptmgr
+
+networks:
+  promptmgr:
+    external: true

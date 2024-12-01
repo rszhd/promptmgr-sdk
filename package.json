@@ -1,0 +1,15 @@
+{
+  "name": "promptmgr-sdk",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon playground/index.js",
+    "dev:composebuild": "npm install && docker-compose -f docker-compose-dev.yml build",
+    "dev:composeup": "docker-compose -f docker-compose-dev.yml up"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.7"
+  }
+}
