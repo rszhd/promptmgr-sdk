@@ -1,6 +1,6 @@
 # PROMPTMGR SDK
 
-Promptmgr is a prompt engineering & management tool for teams to collaborate on creating, testing, and deploying AI prompts with confidence. It allows business team members to create better AI prompts while developers can focus on handling the technical setup
+[Promptmgr](https://www.promptmgr.com/) is a prompt engineering & management tool for teams to collaborate on creating, testing, and deploying AI prompts with confidence. It allows business team members to create better AI prompts while developers can focus on handling the technical setup.
 
 ## Installation
 
