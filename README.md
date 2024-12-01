@@ -1,6 +1,6 @@
 # PROMPTMGR SDK
 
-PROMPTMGR SDK is a powerful tool that enables developers to integrate and interact with the PROMPTMGR platform, a prompt management solution for teams working with AI.
+Promptmgr is a prompt engineering & management tool for teams to collaborate on creating, testing, and deploying AI prompts with confidence. It allows business team members to create better AI prompts while developers can focus on handling the technical setup
 
 ## Installation
 
@@ -56,7 +56,7 @@ const response = await promptManager.run({
 
 ### Getting Prompt Content
 
-Retrieve a prompt's content using `getPrompt`:
+If you are only using Promptmgr for prompt creation and testing, you can retrieve the prompt using `getPrompt`:
 
 ```javascript
 const prompt = await promptManager.getPrompt({
