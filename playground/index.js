@@ -13,7 +13,7 @@ async function testSDK() {
 
   try {
     // Test case 1: Basic run
-    console.log('Testing basic run...');
+    console.log('\n--- Testing basic run ---');
     const response1 = await promptManager.run({
       promptId: 'fbf07b98-b535-4665-8500-af00fdb85f89',
       action: 'test/generate',
@@ -29,11 +29,66 @@ async function testSDK() {
       ]
     });
     console.log('Basic run response:', response1);
+
+    // Test case 2: Get Prompt
+    console.log('\n--- Testing getPrompt ---');
+    const promptResponse = await promptManager.getPrompt({
+      promptId: 'fbf07b98-b535-4665-8500-af00fdb85f89',
+      variables: [
+        {
+          field: 'content_type',
+          value: 'tweet'
+        },
+        {
+          field: 'topic',
+          value: 'Local SEO'
+        }
+      ]
+    });
+    console.log('GetPrompt response:', promptResponse);
+
+    // Test case 3: Chain
+    console.log('\n--- Testing chain ---');
+    const chainResults = await promptManager.chain()
+      .run({
+        id: 'step1',
+        promptId: 'fbf07b98-b535-4665-8500-af00fdb85f89',
+        action: 'test/generate',
+        variables: [
+          {
+            field: 'content_type',
+            value: 'tweet'
+          },
+          {
+            field: 'topic',
+            value: 'AI Technology'
+          }
+        ]
+      })
+      .run({
+        id: 'step2',
+        promptId: 'fbf07b98-b535-4665-8500-af00fdb85f89',
+        action: 'test/generate',
+        variables: ({ prevResults }) => [
+          {
+            field: 'content_type',
+            value: 'linkedin post'
+          },
+          {
+            field: 'topic',
+            value: prevResults.step1.response
+          }
+        ]
+      })
+      .execute();
+
+    console.log('Chain results:', chainResults);
+
   } catch (error) {
     console.error('Test Error:', error);
   }
 }
 
-// Run tests and watch for changes
+// Run tests
 console.log('Starting SDK tests...');
 testSDK();
