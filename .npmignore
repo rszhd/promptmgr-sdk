@@ -1,0 +1,7 @@
+.github/
+node_modules/
+playground/
+.env
+.gitignore
+docker-compose*
+Dockerfile*

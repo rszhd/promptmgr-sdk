@@ -1,4 +1,3 @@
-// promptmgr-sdk/index.js
 import * as dotenv from 'dotenv';
 import Logger from './utils/logger.js';
 
@@ -10,6 +9,21 @@ class PromptManager {
     this.secretKey = config.secretKey || process.env.PROMPTMGR_SECRET_KEY;
     this.environment = config.environment || process.env.PROMPTMGR_ENVIRONMENT;
     this.projectId = config.projectId || process.env.PROMPTMGR_PROJECT_ID;
+    
+    this.modelSettings = {
+      apiKey: config.apiKey,
+      model: config.model,
+      temperature: config.temperature,
+      topP: config.topP,
+      frequencyPenalty: config.frequencyPenalty,
+      presencePenalty: config.presencePenalty,
+      maxTokens: config.maxTokens
+    };
+  
+    this.modelSettings = Object.fromEntries(
+      Object.entries(this.modelSettings).filter(([_, v]) => v !== undefined)
+    );
+  
     this.chainResults = new Map();
     this.isChaining = false;
     
@@ -20,11 +34,12 @@ class PromptManager {
     if (!this.secretKey) {
       throw new Error('Secret key is required');
     }
-
+  
     if (process.env.NODE_ENV === 'development') {
       Logger.debug('PromptManager initialized with:', {
         baseUrl: this.baseUrl,
-        secretKey: '***'
+        secretKey: '***',
+        modelSettings: this.modelSettings
       });
     }
   }
@@ -115,7 +130,8 @@ class PromptManager {
     promptId,
     action,
     openaiFileIds = null,
-    variables = []
+    variables = [],
+    modelSettings = {}
   }) {
     if (!(projectId || this.projectId)) {
       throw new Error('Project ID is required');
@@ -126,16 +142,24 @@ class PromptManager {
     if (!action) {
       throw new Error('Action is required');
     }
-
+  
+    const mergedModelSettings = {
+      ...this.modelSettings,
+      ...modelSettings
+    };
+  
+    const requestBody = {
+      env: this.environment,
+      projectId: projectId || this.projectId,
+      promptId,
+      action,
+      openaiFileIds,
+      variables,
+      ...(Object.keys(mergedModelSettings).length > 0 && { modelSettings: mergedModelSettings })
+    };
+  
     return await this.#fetchUtil(`${this.baseUrl}/run`, {
-      body: {
-        env: this.environment,
-        projectId: projectId || this.projectId,
-        promptId,
-        action,
-        openaiFileIds,
-        variables
-      }
+      body: requestBody
     });
   }
 
@@ -157,7 +181,6 @@ class ChainBuilder {
       throw new Error('Each run in a chain must have an id');
     }
     
-    // Check for duplicate IDs
     if (this.steps.some(step => step.id === config.id)) {
       throw new Error(`Duplicate run ID: ${config.id}`);
     }
