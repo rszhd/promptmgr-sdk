@@ -5,7 +5,7 @@ dotenv.config();
 
 class PromptManager {
   constructor(config) {
-    this.baseUrl = config.baseUrl || process.env.PROMPTMGR_URL;
+    this.baseUrl = config.baseUrl || process.env.PROMPTMGR_URL || "https://promptmgr.reqres.dev/api/service";
     this.secretKey = config.secretKey || process.env.PROMPTMGR_SECRET_KEY;
     this.environment = config.environment || process.env.PROMPTMGR_ENVIRONMENT;
     this.projectId = config.projectId || process.env.PROMPTMGR_PROJECT_ID;
