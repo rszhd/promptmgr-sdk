@@ -1,6 +1,6 @@
-# PROMPTMGR SDK
+# Promptmgr SDK
 
-[Promptmgr](https://www.promptmgr.com/) is a prompt engineering & management tool for teams to collaborate on creating, testing, and deploying AI prompts with confidence. It allows business team members to create better AI prompts while developers can focus on handling the technical setup.
+Promptmgr is a prompt engineering & management tool for teams to collaborate on creating, testing, and deploying AI prompts with confidence. It allows business team members to create better AI prompts while developers can focus on handling the technical setup.
 
 ## Installation
 
@@ -172,9 +172,6 @@ When running in development mode (`NODE_ENV=development`), the SDK provides deta
 - Configuration
 - Errors
 
-## Support
 
-For support:
-- Email: contact@reqres.dev
 
 
